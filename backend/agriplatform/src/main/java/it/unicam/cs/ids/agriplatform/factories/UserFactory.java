@@ -8,10 +8,10 @@ public class UserFactory {
         switch (role) {
             case PRODUCER:
                 return new Producer(id, name, email, password);
-            case PRODUCT_PROCESSOR:
-                return new ProductProcessor(id, name, email, password);
-            case TYPICAL_PRODUCTS_DISTRIBUTOR:
-                return new TypicalProductsDistributor(id, name, email, password);
+            case PRODUCTS_TRANSFORMATOR:
+                return new ProductTransformator(id, name, email, password);
+            case PRODUCTS_DISTRIBUTOR:
+                return new ProductsDistributor(id, name, email, password);
             case CURATOR:
                 return new Curator(id, name, email, password);
             case SUPPLY_CHAIN_ANIMATOR:

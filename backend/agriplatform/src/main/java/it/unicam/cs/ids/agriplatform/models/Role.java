@@ -2,8 +2,8 @@ package it.unicam.cs.ids.agriplatform.models;
 
 public enum Role {
     PRODUCER,
-    PRODUCT_PROCESSOR, 
-    TYPICAL_PRODUCTS_DISTRIBUTOR,
+    PRODUCTS_TRANSFORMATOR, 
+    PRODUCTS_DISTRIBUTOR,
     CURATOR,
     SUPPLY_CHAIN_ANIMATOR,
     CUSTOMER,
