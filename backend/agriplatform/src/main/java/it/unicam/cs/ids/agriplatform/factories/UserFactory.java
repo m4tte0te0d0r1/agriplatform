@@ -1,6 +1,14 @@
 package it.unicam.cs.ids.agriplatform.factories;
 
 import it.unicam.cs.ids.agriplatform.models.*;
+import it.unicam.cs.ids.agriplatform.models.roles.Curator;
+import it.unicam.cs.ids.agriplatform.models.roles.Customer;
+import it.unicam.cs.ids.agriplatform.models.roles.GenericUser;
+import it.unicam.cs.ids.agriplatform.models.roles.Producer;
+import it.unicam.cs.ids.agriplatform.models.roles.ProductsDistributor;
+import it.unicam.cs.ids.agriplatform.models.roles.ProductsTransformator;
+import it.unicam.cs.ids.agriplatform.models.roles.SocialMediaCreator;
+import it.unicam.cs.ids.agriplatform.models.roles.SupplyChainAnimator;
 
 public class UserFactory {
 
@@ -9,7 +17,7 @@ public class UserFactory {
             case PRODUCER:
                 return new Producer(id, name, email, password);
             case PRODUCTS_TRANSFORMATOR:
-                return new ProductTransformator(id, name, email, password);
+                return new ProductsTransformator(id, name, email, password);
             case PRODUCTS_DISTRIBUTOR:
                 return new ProductsDistributor(id, name, email, password);
             case CURATOR:
