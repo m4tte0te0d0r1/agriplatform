@@ -8,21 +8,21 @@ public class Marketplace {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     @Column(nullable = false)
-    private Long productId;
+    private long productId;
 
     @Column(nullable = false)
-    private Long productParentId;
+    private long productParentId;
 
     @Column(nullable = false)
-    private Long sellerId;
+    private long sellerId;
 
     @Column(nullable = false)
-    private Long purchaserId;
+    private long purchaserId;
 
-    public Marketplace(Long id, Long productId, Long productParentId, Long sellerId, Long purchaserId) {
+    public Marketplace(long id, long productId, long productParentId, long sellerId, long purchaserId) {
         this.id = id;
         this.productId = productId;
         this.productParentId = productParentId;
@@ -30,43 +30,43 @@ public class Marketplace {
         this.purchaserId = purchaserId;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public Long getProductId() {
+    public long getProductId() {
         return productId;
     }
 
-    public void setProductId(Long productId) {
+    public void setProductId(long productId) {
         this.productId = productId;
     }
 
-    public Long getProductParentId() {
+    public long getProductParentId() {
         return productParentId;
     }
 
-    public void setProductParentId(Long productParentId) {
+    public void setProductParentId(long productParentId) {
         this.productParentId = productParentId;
     }
 
-    public Long getSellerId() {
+    public long getSellerId() {
         return sellerId;
     }
 
-    public void setSellerId(Long sellerId) {
+    public void setSellerId(long sellerId) {
         this.sellerId = sellerId;
     }
 
-    public Long getPurchaserId() {
+    public long getPurchaserId() {
         return purchaserId;
     }
 
-    public void setPurchaserId(Long purchaserId) {
+    public void setPurchaserId(long purchaserId) {
         this.purchaserId = purchaserId;
     }
 }

@@ -9,7 +9,7 @@ public class Social {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     @Column(length = 100, nullable = false)
     private String title;
@@ -18,12 +18,12 @@ public class Social {
     private String text;
 
     @Column(nullable = false)
-    private Long userId;
+    private long userId;
 
     @Column(nullable = false)
     private LocalDateTime date;
 
-    public Social(Long id, String title, String text, Long userId, LocalDateTime date) {
+    public Social(long id, String title, String text, long userId, LocalDateTime date) {
         this.id = id;
         this.title = title;
         this.text = text;
@@ -31,11 +31,11 @@ public class Social {
         this.date = date;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -55,11 +55,11 @@ public class Social {
         this.text = text;
     }
 
-    public Long getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 

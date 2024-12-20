@@ -9,7 +9,7 @@ public class Event {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     @Column(nullable = false)
     private String name;
@@ -23,7 +23,7 @@ public class Event {
     @Column(columnDefinition = "TEXT")
     private String location;
 
-    public Event(Long id, String name, String description, LocalDateTime eventDate, String location) {
+    public Event(long id, String name, String description, LocalDateTime eventDate, String location) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -31,6 +31,7 @@ public class Event {
         this.location = location;
     }
 
+    public long getId() {
         return id;
     }
 

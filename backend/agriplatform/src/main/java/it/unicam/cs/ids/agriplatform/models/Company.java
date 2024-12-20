@@ -8,7 +8,7 @@ public class Company {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     @Column(columnDefinition = "TEXT")
     private String name;
@@ -17,7 +17,7 @@ public class Company {
     private String address;
 
     @Column
-    private Long userId;
+    private long userId;
 
     @Column(length = 16)
     private String latitude;
@@ -25,7 +25,7 @@ public class Company {
     @Column(length = 16)
     private String longitude;
 
-    public Company(Long id, String name, String address, Long userId, String latitude, String longitude) {
+    public Company(Long id, String name, String address, long userId, String latitude, String longitude) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -34,11 +34,11 @@ public class Company {
         this.longitude = longitude;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -58,11 +58,11 @@ public class Company {
         this.address = address;
     }
 
-    public Long getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 

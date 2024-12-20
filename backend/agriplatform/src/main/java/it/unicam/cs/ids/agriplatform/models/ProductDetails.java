@@ -23,10 +23,10 @@ public class ProductDetails {
     private boolean isApproved;
 
     @Column
-    private Long userId;
+    private long userId;
     
     @Column
-    private Long productId;
+    private long productId;
 
     public ProductDetails(long id, String name, double price, String description, boolean isApproved, Long userId, Long productId) {
         this.id = id;
@@ -78,7 +78,7 @@ public class ProductDetails {
         isApproved = approved;
     }
 
-    public Long getProductId() {
+    public long getProductId() {
         return productId;
     }
 
@@ -86,7 +86,7 @@ public class ProductDetails {
         this.productId = productId;
     }
 
-    public Long getUserId() {
+    public long getUserId() {
         return userId;
     }
 

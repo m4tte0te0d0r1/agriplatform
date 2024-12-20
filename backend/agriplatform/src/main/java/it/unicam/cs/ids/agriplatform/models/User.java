@@ -29,9 +29,7 @@ public abstract class User {
         this.role = role;
     }
 
-    // Getters and setters
-
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
