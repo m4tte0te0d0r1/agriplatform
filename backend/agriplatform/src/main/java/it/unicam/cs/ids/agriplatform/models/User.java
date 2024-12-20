@@ -4,23 +4,32 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "users")
-public class User {
+public abstract class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    protected long id;
 
     @Column(unique = true, nullable = false)
-    private String username;
+    protected String username;
 
     @Column(nullable = false)
-    private String password;
+    protected String email;
 
     @Column(nullable = false)
-    private String role;
+    protected String password;
 
-    // Getters and setters
+    @Column(nullable = false)
+    protected Role role;
 
-    public Long getId() {
+    public User(long id, String username, String email, String password, Role role) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+    }
+
+    public long getId() {
         return id;
     }
 
@@ -36,6 +45,14 @@ public class User {
         this.username = username;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getPassword() {
         return password;
     }
@@ -44,11 +61,11 @@ public class User {
         this.password = password;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 }
