@@ -25,7 +25,6 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
-
     private final AuthenticationManager authenticationManager;
     private final UserDetailsService userDetailsService;
     private final JwtUtil jwtUtil;
@@ -54,6 +53,7 @@ public class AuthController {
             );
         } catch (BadCredentialsException e) {
             return ResponseEntity.status(401).body("Invalid email or password");
+            // return ApiResponse.
         }
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(signInRequest.email());
@@ -63,8 +63,13 @@ public class AuthController {
 
     @PostMapping("/sign-up")
     public ResponseEntity<?> signUp(@RequestBody SignUpDto signUpRequest) {
+        System.out.println("signUpRequest");
+        System.out.println(signUpRequest);
+        System.out.println(signUpRequest.email());
         // Check if the user already exists
         Optional<User> existingUser = userRepository.findByUsername(signUpRequest.email());
+        System.out.println("existingUser");
+        System.out.println(existingUser);
         if (existingUser.isPresent()) {
             return ApiResponse.badRequest("Email already in use");
         }
@@ -75,7 +80,7 @@ public class AuthController {
         user.setPassword(passwordEncoder.encode(signUpRequest.password()));
         // user.setName(signUpRequest.name());
         // user.setLastName(signUpRequest.lastName());
-        
+
         User savedUser = userRepository.save(user);
         return ApiResponse.created(savedUser);
     }
