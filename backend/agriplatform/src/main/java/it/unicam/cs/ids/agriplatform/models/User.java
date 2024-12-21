@@ -4,16 +4,16 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "users")
-public abstract class User {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected long id;
 
     @Column(unique = true, nullable = false)
-    protected String username;
+    private String username;
 
     @Column(nullable = false)
-    protected String email;
+    private String email;
 
     @Column(nullable = false)
     protected String password;

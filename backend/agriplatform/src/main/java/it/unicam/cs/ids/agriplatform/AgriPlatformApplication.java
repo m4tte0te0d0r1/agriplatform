@@ -9,4 +9,3 @@ public class AgriPlatformApplication {
         SpringApplication.run(AgriPlatformApplication.class, args);
     }
 }
-

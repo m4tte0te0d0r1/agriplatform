@@ -25,7 +25,7 @@ public class Company {
     @Column(length = 16)
     private String longitude;
 
-    public Company(Long id, String name, String address, long userId, String latitude, String longitude) {
+    public Company(long id, String name, String address, long userId, String latitude, String longitude) {
         this.id = id;
         this.name = name;
         this.address = address;
