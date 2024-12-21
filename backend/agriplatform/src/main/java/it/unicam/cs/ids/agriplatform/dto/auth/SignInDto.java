@@ -1,3 +1,13 @@
 package it.unicam.cs.ids.agriplatform.dto.auth;
 
-public record SignInDto(String email, String password) {}
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+
+public record SignInDTO(
+        @NotBlank(message = "Email is required")
+        @Email(message = "Invalid email format")
+        String email,
+
+        @NotBlank(message = "Password is required")
+        String password
+) {}
