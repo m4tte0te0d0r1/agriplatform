@@ -1,6 +1,7 @@
 package it.unicam.cs.ids.agriplatform.factories;
 
 import it.unicam.cs.ids.agriplatform.models.*;
+import it.unicam.cs.ids.agriplatform.models.roles.Admin;
 import it.unicam.cs.ids.agriplatform.models.roles.Curator;
 import it.unicam.cs.ids.agriplatform.models.roles.Customer;
 import it.unicam.cs.ids.agriplatform.models.roles.GenericUser;
