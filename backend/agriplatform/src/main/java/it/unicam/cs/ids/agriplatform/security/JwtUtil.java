@@ -3,15 +3,17 @@ package it.unicam.cs.ids.agriplatform.security;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-
+import io.jsonwebtoken.security.Keys;
+import it.unicam.cs.ids.agriplatform.models.User;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+
+import javax.crypto.SecretKey;
 
 @Component
 public class JwtUtil {
@@ -22,18 +24,33 @@ public class JwtUtil {
     @Value("${jwt.expiration}")
     private Long expiration;
 
-    public String generateToken(UserDetails userdDetails) {
+    /**
+     * Generate a token from a User object.
+     *
+     * @param user The User object containing details to encode in the token.
+     * @return The generated JWT token.
+     */
+    public String generateToken(User user) {
+        if (user == null) {
+            throw new IllegalArgumentException("User object cannot be null.");
+        }
         Map<String, Object> claims = new HashMap<>();
-        return createToken(claims, userdDetails.getUsername());
+        claims.put("id", user.getId());
+        claims.put("username", user.getUsername());
+        claims.put("email", user.getEmail());
+        claims.put("role", user.getRole().name());
+        return createToken(claims, user.getEmail());
     }
 
     private String createToken(Map<String, Object> claims, String subject) {
-        return Jwts.builder()
+        byte[] bytes = secret.getBytes();
+        SecretKey secretKey = Keys.hmacShaKeyFor(bytes);
+            return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(subject)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + expiration * 1000))
-                .signWith(SignatureAlgorithm.HS512, secret)
+                .signWith(secretKey, SignatureAlgorithm.HS512)
                 .compact();
     }
 
@@ -55,7 +72,14 @@ public class JwtUtil {
     }
 
     private Claims extractAllClaims(String token) {
-        return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
+        byte[] bytes = secret.getBytes();
+        SecretKey secretKey = Keys.hmacShaKeyFor(bytes);
+
+        return Jwts.parserBuilder()
+                .setSigningKey(secretKey)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
     }
 
     private Boolean isTokenExpired(String token) {

@@ -23,7 +23,7 @@ public class UserService implements UserDetailsService {
         return org.springframework.security.core.userdetails.User
                 .withUsername(user.getUsername())
                 .password(user.getPassword())
-                .authorities("USER") // Puoi modificare le autorità in base al tuo sistema
+                .authorities("USER")
                 .build();
     }
 }

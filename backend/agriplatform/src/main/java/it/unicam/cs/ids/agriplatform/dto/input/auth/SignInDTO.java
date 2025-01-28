@@ -1,4 +1,4 @@
-package it.unicam.cs.ids.agriplatform.dto.auth;
+package it.unicam.cs.ids.agriplatform.dto.input.auth;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
