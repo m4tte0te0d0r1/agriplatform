@@ -20,9 +20,11 @@ import it.unicam.cs.ids.agriplatform.middlewares.JwtRequestFilter;
 public class SecurityConfig {
 
     private final UserDetailsService userDetailsService;
+    private final JwtRequestFilter jwtRequestFilter;
 
-    public SecurityConfig(UserDetailsService userDetailsService) {
+    public SecurityConfig(UserDetailsService userDetailsService, JwtRequestFilter jwtRequestFilter) {
         this.userDetailsService = userDetailsService;
+        this.jwtRequestFilter = jwtRequestFilter;
     }
 
     @Bean
@@ -40,10 +42,13 @@ public class SecurityConfig {
             throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(new MvcRequestMatcher(introspector, "/api/auth/**")).permitAll())
+                        // .requestMatchers(new MvcRequestMatcher(introspector,
+                        // "/api/auth/**")).permitAll())
+                        .requestMatchers(new MvcRequestMatcher(introspector, "/api/auth/**")).permitAll()
+                        .requestMatchers(new MvcRequestMatcher(introspector, "/api/**")).authenticated())
                 .csrf(csrf -> csrf.disable());
 
-        http.addFilterBefore(new JwtRequestFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 

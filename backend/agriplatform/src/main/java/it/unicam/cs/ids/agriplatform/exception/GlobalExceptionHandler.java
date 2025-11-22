@@ -28,6 +28,12 @@ public class GlobalExceptionHandler {
         return ApiResponse.badRequest(ex.getMessage());
     }
 
+    @ExceptionHandler(IllegalStateException.class)
+    public ResponseEntity<?> handleIllegalStateException(IllegalStateException ex) {
+        return ApiResponse.badRequest(ex.getMessage()); // Or unauthorized if I had a specific method for that in
+                                                        // ApiResponse
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> handleGeneralExceptions(Exception ex) {
         return ApiResponse.internalServerError("An unexpected error occurred");

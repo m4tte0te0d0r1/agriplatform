@@ -24,26 +24,28 @@ public class Product {
     @Column(nullable = false)
     private int quantity;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "product_detail_id", referencedColumnName = "id")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "product_id")
     private List<ProductDetail> details;
 
     @ManyToOne
     @JoinColumn(name = "certification_id")
     private Certification certification;
 
+    @Column(nullable = false)
+    private boolean available = true;
+
     public Product() {
     }
 
     public Product(
-        long id, 
-        String name, 
-        double price,
-        long userId, 
-        int quantity,
-        List<ProductDetail> details, 
-        Certification certification
-    ) {
+            long id,
+            String name,
+            double price,
+            long userId,
+            int quantity,
+            List<ProductDetail> details,
+            Certification certification) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -107,5 +109,13 @@ public class Product {
 
     public void setCertification(Certification certification) {
         this.certification = certification;
+    }
+
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
     }
 }
