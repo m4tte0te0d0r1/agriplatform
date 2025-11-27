@@ -3,13 +3,16 @@ package it.unicam.cs.ids.agriplatform.services;
 import it.unicam.cs.ids.agriplatform.dto.input.product.CreateProductDTO;
 import it.unicam.cs.ids.agriplatform.dto.input.product.ProductDetailDTO;
 import it.unicam.cs.ids.agriplatform.dto.input.product.UpdateProductDTO;
+import it.unicam.cs.ids.agriplatform.exception.HttpException;
 import it.unicam.cs.ids.agriplatform.models.Product;
 import it.unicam.cs.ids.agriplatform.models.ProductDetail;
+import it.unicam.cs.ids.agriplatform.models.Role;
 import it.unicam.cs.ids.agriplatform.models.User;
 import it.unicam.cs.ids.agriplatform.repositories.ProductRepository;
 import it.unicam.cs.ids.agriplatform.utils.UserContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -46,7 +49,10 @@ public class ProductService {
      * Create a new product from a DTO.
      */
     public Product createProduct(CreateProductDTO productDTO) {
-        Product product = mapToEntity(productDTO);
+        User currentUser = userContext.getCurrentUser();
+        validateProductCreationRole(currentUser);
+
+        Product product = mapToEntity(productDTO, currentUser);
         return productRepository.save(product);
     }
 
@@ -54,13 +60,17 @@ public class ProductService {
      * Update an existing product.
      */
     public Optional<Product> updateProduct(Long id, UpdateProductDTO productDTO) {
+        User currentUser = userContext.getCurrentUser();
+
         return productRepository.findById(id).map(existingProduct -> {
+            validateProductModificationRole(currentUser, existingProduct);
+
             existingProduct.setName(productDTO.name());
             existingProduct.setPrice(productDTO.price());
             existingProduct.setQuantity(productDTO.quantity());
             List<ProductDetail> details = productDTO.details()
                     .stream()
-                    .map(this::mapToEntity)
+                    .map(detailDto -> mapToEntity(detailDto, currentUser))
                     .collect(Collectors.toList());
             existingProduct.setDetails(details);
             return productRepository.save(existingProduct);
@@ -71,19 +81,38 @@ public class ProductService {
      * Delete a product by ID.
      */
     public boolean deleteProduct(Long id) {
-        if (productRepository.existsById(id)) {
+        User currentUser = userContext.getCurrentUser();
+        Optional<Product> productOpt = productRepository.findById(id);
+
+        if (productOpt.isPresent()) {
+            validateProductModificationRole(currentUser, productOpt.get());
             productRepository.deleteById(id);
             return true;
         }
         return false;
     }
 
+    private void validateProductCreationRole(User user) {
+        Role role = user.getRole();
+        if (role != Role.PRODUCER &&
+                role != Role.PRODUCTS_TRANSFORMATOR &&
+                role != Role.PRODUCTS_DISTRIBUTOR) {
+            throw new HttpException("User does not have permission to create products", HttpStatus.FORBIDDEN);
+        }
+    }
+
+    private void validateProductModificationRole(User user, Product product) {
+        if (user.getId() != product.getUserId() &&
+                user.getRole() != Role.ADMIN &&
+                user.getRole() != Role.CURATOR) {
+            throw new HttpException("User does not have permission to modify this product", HttpStatus.FORBIDDEN);
+        }
+    }
+
     /**
      * Map a CreateProductDTO to a Product entity.
      */
-    private Product mapToEntity(CreateProductDTO dto) {
-        User currentUser = userContext.getCurrentUser();
-
+    private Product mapToEntity(CreateProductDTO dto, User currentUser) {
         Product product = new Product();
         product.setName(dto.name());
         product.setPrice(dto.price());
@@ -108,38 +137,12 @@ public class ProductService {
      */
     private ProductDetail mapToEntity(ProductDetailDTO dto, User currentUser) {
         ProductDetail productDetail = new ProductDetail();
-        // productDetail.setId(dto.id()); // ID is usually generated, but if DTO has it
-        // and we want to force it... usually for create we don't set ID.
-        // Assuming create, we might ignore ID or if it's an update logic mixed in.
-        // But looking at the DTO, it has ID. If it's for creation, ID should probably
-        // be ignored or null.
-        // However, keeping previous logic of setting ID if present, though risky for
-        // IDENTITY generation.
-        // if (dto.id() != null) {
-        // productDetail.setId(dto.id());
-        // }
-
         productDetail.setName(dto.name());
         productDetail.setPrice(dto.price());
         productDetail.setDescription(dto.description());
-        // productDetail.setApproved(dto.approved()); // Assuming approval logic might
-        // be separate or default to false/true
-        productDetail.setApproved(true); // Defaulting to true for now based on previous logic or DTO
-
-        // Use the current user as the owner of the detail as well
+        productDetail.setApproved(true);
         productDetail.setUser(currentUser);
 
         return productDetail;
-    }
-
-    // Overload for update or other cases if needed, but for now we refactored the
-    // main one.
-    // Keeping the old one private if needed by update, but update usually maps
-    // differently.
-    // The update method uses mapToEntity in the stream, so we need to update that
-    // call too.
-
-    private ProductDetail mapToEntity(ProductDetailDTO dto) {
-        return mapToEntity(dto, userContext.getCurrentUser());
     }
 }

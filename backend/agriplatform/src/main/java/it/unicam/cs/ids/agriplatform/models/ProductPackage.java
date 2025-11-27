@@ -1,5 +1,7 @@
 package it.unicam.cs.ids.agriplatform.models;
+
 import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "product_packages")
@@ -23,12 +25,20 @@ public class ProductPackage {
     @Column
     private String description;
 
-    public ProductPackage(long id, String name, double price, long userId, String description) {
+    @ManyToMany
+    @JoinTable(name = "package_products", joinColumns = @JoinColumn(name = "package_id"), inverseJoinColumns = @JoinColumn(name = "product_id"))
+    private List<Product> products;
+
+    public ProductPackage() {
+    }
+
+    public ProductPackage(long id, String name, double price, long userId, String description, List<Product> products) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.userId = userId;
         this.description = description;
+        this.products = products;
     }
 
     public long getId() {
@@ -69,5 +79,13 @@ public class ProductPackage {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 }
