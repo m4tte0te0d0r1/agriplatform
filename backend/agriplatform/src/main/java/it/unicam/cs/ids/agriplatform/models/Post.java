@@ -23,6 +23,9 @@ public class Post {
     @Column(nullable = false)
     private LocalDateTime date;
 
+    public Post() {
+    }
+
     public Post(long id, String title, String text, long userId, LocalDateTime date) {
         this.id = id;
         this.title = title;

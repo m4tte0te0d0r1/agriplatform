@@ -3,3 +3,4 @@ agriplatform.db
 AgriPlatform.vpp.**
 backend/agriplatform/target/
 .DS_Store
+target
