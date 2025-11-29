@@ -1,4 +1,4 @@
-package it.unicam.cs.ids.agriplatform.controllers;
+package it.unicam.cs.ids.agriplatform.controllers.auth;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

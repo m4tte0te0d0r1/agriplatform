@@ -1,10 +1,11 @@
 package it.unicam.cs.ids.agriplatform.models;
+
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "product_details")
 
-public class ProductDetails {
+public class ProductDetail {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,20 +23,28 @@ public class ProductDetails {
     @Column(nullable = false)
     private boolean isApproved;
 
-    @Column
-    private long userId;
-    
-    @Column
-    private long productId;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    @com.fasterxml.jackson.annotation.JsonIgnore
+    private User user;
 
-    public ProductDetails(long id, String name, double price, String description, boolean isApproved, Long userId, Long productId) {
+    @ManyToOne
+    @JoinColumn(name = "product_id", nullable = false)
+    @com.fasterxml.jackson.annotation.JsonIgnore
+    private Product product;
+
+    public ProductDetail() {
+    }
+
+    public ProductDetail(long id, String name, double price, String description, boolean isApproved, User user,
+            Product product) {
         this.id = id;
         this.name = name;
         this.price = price;
-        this.productId = productId;
+        this.product = product;
         this.description = description;
         this.isApproved = isApproved;
-        this.userId = userId;
+        this.user = user;
     }
 
     public long getId() {
@@ -78,19 +87,19 @@ public class ProductDetails {
         isApproved = approved;
     }
 
-    public long getProductId() {
-        return productId;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setProductId(Long productId) {
-        this.productId = productId;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
-    public long getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

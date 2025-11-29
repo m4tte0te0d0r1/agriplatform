@@ -5,9 +5,10 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "users")
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected long id;
+    private long id;
 
     @Column(unique = true, nullable = false)
     private String username;
@@ -16,10 +17,12 @@ public class User {
     private String email;
 
     @Column(nullable = false)
-    protected String password;
+    @com.fasterxml.jackson.annotation.JsonIgnore
+    private String password;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    protected Role role;
+    private Role role;
 
     public User() {
     }
@@ -36,7 +39,7 @@ public class User {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -72,4 +75,3 @@ public class User {
         this.role = role;
     }
 }
-
