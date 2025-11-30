@@ -11,12 +11,13 @@ public class EventInvites {
     private long id;
 
     @Column(nullable = false)
-    @GeneratedValue
     private long eventId;
 
     @Column(nullable = false)
-    @GeneratedValue
     private long userId;
+
+    public EventInvites() {
+    }
 
     public EventInvites(long id, long eventId, long userId) {
         this.id = id;
@@ -26,7 +27,7 @@ public class EventInvites {
 
     public long getId() {
         return id;
-    }   
+    }
 
     public void setId(long id) {
         this.id = id;

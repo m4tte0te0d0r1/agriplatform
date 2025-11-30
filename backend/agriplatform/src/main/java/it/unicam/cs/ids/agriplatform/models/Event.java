@@ -23,6 +23,9 @@ public class Event {
     @Column(columnDefinition = "TEXT")
     private String location;
 
+    public Event() {
+    }
+
     public Event(long id, String name, String description, LocalDateTime eventDate, String location) {
         this.id = id;
         this.name = name;
