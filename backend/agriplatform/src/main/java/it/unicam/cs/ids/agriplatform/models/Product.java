@@ -35,6 +35,9 @@ public class Product {
     @Column(nullable = false)
     private boolean available = true;
 
+    @Column(nullable = false)
+    private boolean approved = false;
+
     public Product() {
     }
 
@@ -117,5 +120,13 @@ public class Product {
 
     public void setAvailable(boolean available) {
         this.available = available;
+    }
+
+    public boolean isApproved() {
+        return approved;
+    }
+
+    public void setApproved(boolean approved) {
+        this.approved = approved;
     }
 }

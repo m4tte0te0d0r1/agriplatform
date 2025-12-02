@@ -78,4 +78,42 @@ public class ProductController {
             return ApiResponse.notFound("Product not found");
         }
     }
+
+    /**
+     * GET /api/products/pending - Get pending products (not approved)
+     */
+    @GetMapping("/pending")
+    public ResponseEntity<?> getPendingProducts() {
+        List<Product> products = productService.getPendingProducts();
+        return ApiResponse.ok("Pending products retrieved successfully", products);
+    }
+
+    /**
+     * GET /api/products/approved - Get approved products
+     */
+    @GetMapping("/approved")
+    public ResponseEntity<?> getApprovedProducts() {
+        List<Product> products = productService.getApprovedProducts();
+        return ApiResponse.ok("Approved products retrieved successfully", products);
+    }
+
+    /**
+     * PUT /api/products/{id}/approve - Approve a product (Curator only)
+     */
+    @PutMapping("/{id}/approve")
+    public ResponseEntity<?> approveProduct(@PathVariable Long id) {
+        return productService.approveProduct(id)
+                .map(product -> ApiResponse.ok("Product approved successfully", product))
+                .orElse(ApiResponse.notFound("Product not found with id: " + id));
+    }
+
+    /**
+     * PUT /api/products/{id}/reject - Reject a product
+     */
+    @PutMapping("/{id}/reject")
+    public ResponseEntity<?> rejectProduct(@PathVariable Long id) {
+        return productService.rejectProduct(id)
+                .map(product -> ApiResponse.ok("Product rejected successfully", product))
+                .orElse(ApiResponse.notFound("Product not found with id: " + id));
+    }
 }

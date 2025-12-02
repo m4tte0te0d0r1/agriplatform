@@ -11,23 +11,32 @@ public class Marketplace {
     private long id;
 
     @Column(nullable = false)
-    private long productId;
+    @Enumerated(EnumType.STRING)
+    private MarketplaceItemType itemType; // PRODUCT or PACKAGE
 
     @Column(nullable = false)
-    private long productPackageId;
+    private long itemId; // ID of product or package
 
     @Column(nullable = false)
     private long sellerId;
 
     @Column(nullable = false)
-    private long purchaserId;
+    private boolean isAvailable;
 
-    public Marketplace(long id, long productId, long productPackageId, long sellerId, long purchaserId) {
+    @Column
+    private double price;
+
+    public Marketplace() {
+    }
+
+    public Marketplace(long id, MarketplaceItemType itemType, long itemId, long sellerId, boolean isAvailable,
+            double price) {
         this.id = id;
-        this.productId = productId;
-        this.productPackageId = productPackageId;
+        this.itemType = itemType;
+        this.itemId = itemId;
         this.sellerId = sellerId;
-        this.purchaserId = purchaserId;
+        this.isAvailable = isAvailable;
+        this.price = price;
     }
 
     public long getId() {
@@ -38,20 +47,20 @@ public class Marketplace {
         this.id = id;
     }
 
-    public long getProductId() {
-        return productId;
+    public MarketplaceItemType getItemType() {
+        return itemType;
     }
 
-    public void setProductId(long productId) {
-        this.productId = productId;
+    public void setItemType(MarketplaceItemType itemType) {
+        this.itemType = itemType;
     }
 
-    public long getProductPackageId() {
-        return productPackageId;
+    public long getItemId() {
+        return itemId;
     }
 
-    public void setProductPackageId(long productPackageId) {
-        this.productPackageId = productPackageId;
+    public void setItemId(long itemId) {
+        this.itemId = itemId;
     }
 
     public long getSellerId() {
@@ -62,11 +71,19 @@ public class Marketplace {
         this.sellerId = sellerId;
     }
 
-    public long getPurchaserId() {
-        return purchaserId;
+    public boolean isAvailable() {
+        return isAvailable;
     }
 
-    public void setPurchaserId(long purchaserId) {
-        this.purchaserId = purchaserId;
+    public void setAvailable(boolean available) {
+        isAvailable = available;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 }

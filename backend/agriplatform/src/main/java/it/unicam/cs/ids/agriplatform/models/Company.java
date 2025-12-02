@@ -25,6 +25,9 @@ public class Company {
     @Column(length = 16)
     private String longitude;
 
+    public Company() {
+    }
+
     public Company(long id, String name, String address, long userId, String latitude, String longitude) {
         this.id = id;
         this.name = name;

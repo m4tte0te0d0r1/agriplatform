@@ -145,4 +145,42 @@ public class ProductService {
 
         return productDetail;
     }
+
+    /**
+     * Approve a product (Curator only)
+     */
+    public Optional<Product> approveProduct(Long id) {
+        return productRepository.findById(id).map(product -> {
+            product.setApproved(true);
+            return productRepository.save(product);
+        });
+    }
+
+    /**
+     * Reject/Unapprove a product
+     */
+    public Optional<Product> rejectProduct(Long id) {
+        return productRepository.findById(id).map(product -> {
+            product.setApproved(false);
+            return productRepository.save(product);
+        });
+    }
+
+    /**
+     * Get all pending products (not approved)
+     */
+    public List<Product> getPendingProducts() {
+        return productRepository.findAll().stream()
+                .filter(p -> !p.isApproved())
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Get all approved products
+     */
+    public List<Product> getApprovedProducts() {
+        return productRepository.findAll().stream()
+                .filter(Product::isApproved)
+                .collect(Collectors.toList());
+    }
 }
