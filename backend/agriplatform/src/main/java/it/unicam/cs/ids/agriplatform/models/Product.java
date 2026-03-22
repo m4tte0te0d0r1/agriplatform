@@ -32,10 +32,10 @@ public class Product {
     @JoinColumn(name = "certification_id")
     private Certification certification;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "boolean default true")
     private boolean available = true;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "boolean default false")
     private boolean approved = false;
 
     public Product() {

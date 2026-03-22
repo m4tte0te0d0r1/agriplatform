@@ -1,6 +1,60 @@
-.vscode
-agriplatform.db
-AgriPlatform.vpp.**
-backend/agriplatform/target/
-.DS_Store
+# ==================================
+# Java e Maven
+# ==================================
 target
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+*.log
+
+# ==================================
+# Database SQLite
+# ==================================
+*.db
+*.sqlite
+*.sqlite3
+agriplatform.db
+
+# ==================================
+# Visual Studio Code
+# ==================================
+.vscode/
+*.code-workspace
+
+# ==================================
+# IntelliJ IDEA
+# ==================================
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+
+# ==================================
+# Eclipse
+# ==================================
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache/
+
+# ==================================
+# File di Sistema Operativo
+# ==================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# ==================================
+# File specifici del progetto
+# ==================================
+AgriPlatform.vpp.**
